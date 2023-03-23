@@ -41,4 +41,6 @@ const getRandomElement = (elements) => {
   return elements[getRandomInteger(MIN, max)];
 };
 
-export { getRandomInteger, getRandomElement, humanizePointDueDate, duration, getDate, getDateTime, getTime };
+const isEscape = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
+
+export { getRandomInteger, getRandomElement, humanizePointDueDate, duration, getDate, getDateTime, getTime, isEscape };

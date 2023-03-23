@@ -2,7 +2,9 @@ import TripEventsView from '../view/trip-events-view.js';
 import RoutePointView from '../view/route-point-view.js';
 import EditingFormView from '../view/editing-form-view.js';
 import SortingView from '../view/sorting-view.js';
+import NoPointView from '../view/no-point-view.js';
 import { render } from '../render.js';
+import { isEscape } from '../utils.js';
 
 export default class TripEventsPresenter {
   #eventsList = null;
@@ -22,11 +24,16 @@ export default class TripEventsPresenter {
     this.#destinations = [...this.#pointsModel.destinations];
     this.#offers = [...this.#pointsModel.offers];
 
-    render(new SortingView(), this.tripContainer);
-    render(this.#eventsList, this.tripContainer);
+    if (this.#boardPoints.length === 0) {
+      render(new NoPointView(), this.tripContainer);
+    }
+    else {
+      render(new SortingView(), this.tripContainer);
+      render(this.#eventsList, this.tripContainer);
 
-    for (const point of this.#boardPoints){
-      this.#renderPoint(point);
+      for (const point of this.#boardPoints) {
+        this.#renderPoint(point);
+      }
     }
   }
 
@@ -43,7 +50,7 @@ export default class TripEventsPresenter {
     };
 
     const onEscKeyDown = (evt) => {
-      if (evt.key === 'Escape' || evt.key === 'Esc') {
+      if (isEscape(evt)) {
         evt.preventDefault();
         replaceEditFormToPoint();
         document.removeEventListener('keydown', onEscKeyDown);
