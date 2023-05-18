@@ -61,7 +61,7 @@ const getOffers = () => Array.from({length: POINT_TYPES.length}).map((value, ind
 const offersByType = getOffers();
 const destinations = getDestinations();
 
-const generatePoint = (id) => {
+const generatePoint = () => {
   const offersByTypePoint = getRandomElement(offersByType);
   const allOfferIdsByTypePoint = offersByTypePoint.offers.map((offer) => offer.id);
   return {

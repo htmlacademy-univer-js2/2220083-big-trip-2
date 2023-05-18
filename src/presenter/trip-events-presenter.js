@@ -83,7 +83,7 @@ export default class TripEventsPresenter {
     const pointPresenter = new PointPresenter(this.#pointListComponent.element, this.#pointsModel, this.#handlePointChange, this.#handleModeChange);
     pointPresenter.init(point);
     this.#pointPresenter.set(point.id, pointPresenter);
-  };
+  }
 
   #renderPoints = (from, to) => {
     this.#boardPoints
