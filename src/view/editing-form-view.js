@@ -1,9 +1,9 @@
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 import { getDateTime } from '../utils/point-date.js';
 import { Point, PointDescription } from '../const.js';
-import dayjs from 'dayjs';
-import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
+import flatpickr from 'flatpickr';
+import dayjs from 'dayjs';
 import he from 'he';
 
 const BLANK_FORM = {
@@ -140,17 +140,17 @@ const createEditFormTemplate = (point, destinations, allOffers, isNewPoint) => {
 };
 
 export default class EditingFormView extends AbstractStatefulView {
-  #destination = null;
+  #destinations = null;
   #offers = null;
   #datepickerFrom = null;
   #datepickerTo = null;
   #isNewPoint = null;
   #offersByType = null;
 
-  constructor({point = BLANK_FORM, destination, offers, isNewPoint}) {
+  constructor({point = BLANK_FORM, destinations, offers, isNewPoint}) {
     super();
     this._state = EditingFormView.parsePointToState(point);
-    this.#destination = destination;
+    this.#destinations = destinations;
     this.#offers = offers;
     this.#isNewPoint = isNewPoint;
     this.#offersByType = this.#offers.find((offer) => offer.type === this._state.type);
@@ -158,7 +158,7 @@ export default class EditingFormView extends AbstractStatefulView {
   }
 
   get template() {
-    return createEditFormTemplate(this._state, this.#destination, this.#offers, this.#isNewPoint);
+    return createEditFormTemplate(this._state, this.#destinations, this.#offers, this.#isNewPoint);
   }
 
   removeElement = () => {
@@ -217,7 +217,7 @@ export default class EditingFormView extends AbstractStatefulView {
 
   #destinationInputHandler = (evt) => {
     evt.preventDefault();
-    const destination = this.#destination.find((dest) => dest.name === evt.target.value);
+    const destination = this.#destinations.find((dest) => dest.name === evt.target.value);
     this.updateElement({
       destination: destination.id,
     });
@@ -233,6 +233,7 @@ export default class EditingFormView extends AbstractStatefulView {
   #pointTypeClickHandler = (evt) => {
     evt.preventDefault();
     this._state.offers = [];
+    this.#offersByType = this.#offers.find((offer) => offer.type === evt.target.value);
     this.updateElement({
       type: evt.target.value,
     });
@@ -276,7 +277,7 @@ export default class EditingFormView extends AbstractStatefulView {
   #offersClickHandler = (evt) => {
     evt.preventDefault();
     const offerId = Number(evt.target.id.slice(-1));
-    const offers = this._state.offers.filter((n) => n !== offerId);
+    const offers = this._state.offers.filter((offer) => offer !== offerId);
     let currentOffers = [...this._state.offers];
     if (offers.length !== this._state.offers.length) {
       currentOffers = offers;
@@ -304,7 +305,7 @@ export default class EditingFormView extends AbstractStatefulView {
       .addEventListener('change', this.#pointTypeClickHandler);
     this.element.querySelector('.event__input')
       .addEventListener('change', this.#destinationInputHandler);
-    if(this.#offersByType && this.#offersByType.offers.length > 0)  {
+    if (this.#offersByType && this.#offersByType.offers.length > 0)  {
       this.element.querySelector('.event__available-offers').addEventListener('change', this.#offersClickHandler);
     }
     this.element.querySelector('.event__input--price')

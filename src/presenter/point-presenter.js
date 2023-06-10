@@ -13,6 +13,7 @@ export default class PointPresenter {
   #pointListContainer = null;
   #pointComponent = null;
   #editingPointComponent = null;
+
   #destinationsModel = null;
   #offersModel = null;
 
@@ -44,7 +45,7 @@ export default class PointPresenter {
     this.#pointComponent = new RoutePointView(point, this.#destinations, this.#offers);
     this.#editingPointComponent = new EditingFormView({
       point: point,
-      destination: this.#destinations,
+      destinations: this.#destinations,
       offers: this.#offers,
       isNewPoint: false
     });

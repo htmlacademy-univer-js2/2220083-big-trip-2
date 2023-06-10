@@ -9,6 +9,7 @@ export default class PointNewPresenter {
 
   #changeData = null;
   #destroyCallback = null;
+
   #destinationsModel = null;
   #offersModel = null;
 
@@ -33,7 +34,7 @@ export default class PointNewPresenter {
     this.#offers = [...this.#offersModel.offers];
 
     this.#pointEditComponent = new EditingFormView({
-      destination: this.#destinations,
+      destinations: this.#destinations,
       offers: this.#offers,
       isNewPoint: true
     });
