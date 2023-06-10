@@ -20,12 +20,13 @@ const siteMainElement = document.querySelector('.page-main');
 const pointsModel = new PointsModel(new PointsApiService(END_POINT, AUTHORIZATION));
 const destinationsModel = new DestinationsModel(new DestinationsApiService(END_POINT, AUTHORIZATION));
 const offersModel = new OffersModel(new OffersApiService(END_POINT, AUTHORIZATION));
-
 const filterModel = new FilterModel();
 
 const filterPresenter = new FilterPresenter({
   filterContainer: siteHeaderElement.querySelector('.trip-controls__filters'),
   pointsModel: pointsModel,
+  destinationsModel: destinationsModel,
+  offersModel: offersModel,
   filterModel: filterModel
 });
 filterPresenter.init();
@@ -43,6 +44,7 @@ tripPresenter.init();
 const newPointButtonPresenter = new NewPointButtonPresenter({
   newPointButtonContainer: siteHeaderElement,
   destinationsModel: destinationsModel,
+  pointsModel: pointsModel,
   offersModel: offersModel,
   tripPresenter: tripPresenter
 });

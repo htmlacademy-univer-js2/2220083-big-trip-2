@@ -1,5 +1,5 @@
-import dayjs from 'dayjs';
 import { SortType } from '../const.js';
+import dayjs from 'dayjs';
 
 const HOUR_MINUTES_COUNT = 60;
 const TOTAL_DAY_MINUTES_COUNT = 1440;
@@ -18,8 +18,8 @@ const duration = (dateFrom, dateTo) => {
   const end = dayjs(dateTo);
   const difference = end.diff(start, 'minute');
 
-  const days = Math.floor(difference / TOTAL_DAY_MINUTES_COUNT);
-  const restHours = Math.floor((difference - days * TOTAL_DAY_MINUTES_COUNT) / HOUR_MINUTES_COUNT);
+  const days = Math.trunc(difference / TOTAL_DAY_MINUTES_COUNT);
+  const restHours = Math.trunc((difference - days * TOTAL_DAY_MINUTES_COUNT) / HOUR_MINUTES_COUNT);
   const restMinutes = difference - (days * TOTAL_DAY_MINUTES_COUNT + restHours * HOUR_MINUTES_COUNT);
 
   const daysOutput = getDaysOutput(days);
